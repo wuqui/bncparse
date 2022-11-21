@@ -5,8 +5,10 @@ __all__ = ['get_xml']
 
 # %% ../nbs/00_core.ipynb 5
 from pathlib import Path
+from collections import defaultdict
 
 from lxml import etree
+import pandas as pd
 
 # %% ../nbs/00_core.ipynb 13
 def get_xml(f_path):
