@@ -149,5 +149,4 @@ checklink/cookies.txt
 
 # Quarto
 .quarto
-/data/hjs-analysis/
 /hjs-analysis/
