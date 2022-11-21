@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "bncparse"
+  site-url: "https://wuqui.github.io/bncparse"
+  description: "parse the BNC"
+  repo-branch: main
+  repo-url: "https://github.com/wuqui/bncparse"
