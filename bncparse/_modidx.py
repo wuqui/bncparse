@@ -5,4 +5,4 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://wuqui.github.io',
                 'git_url': 'https://github.com/wuqui/bncparse',
                 'lib_path': 'bncparse'},
-  'syms': {'bncparse.core': {'bncparse.core.foo': ('core.html#foo', 'bncparse/core.py')}}}
+  'syms': {'bncparse.core': {'bncparse.core.get_xml': ('core.html#get_xml', 'bncparse/core.py')}}}
