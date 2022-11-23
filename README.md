@@ -25,15 +25,16 @@ For development, I use a small subset of the corpus contained in
 `data/test` that only contains the first 10 texts.
 
 ``` python
-# test version
-path_bnc = Path('../data/test/bnc-2014-spoken')
-texts_n = 10
-tokens_n = 94659
+testing = False
 
-# full version
-# path_bnc = Path('../data/bnc-2014-spoken')
-# texts_n = 10
-# tokens_n = 94659
+if testing:
+    path_bnc = Path('../data/test/bnc-2014-spoken')
+    texts_n = 10
+    tokens_n = 94_659
+else:
+    path_bnc = Path('../data/bnc-2014-spoken')
+    texts_n = 1251
+    tokens_n = 11_422_615
 ```
 
 ``` python
@@ -60,7 +61,7 @@ assert len(path_texts) == texts_n
 ------------------------------------------------------------------------
 
 <a
-href="https://github.com/wuqui/bncparse/blob/main/bncparse/core.py#L14"
+href="https://github.com/wuqui/bncparse/blob/main/bncparse/core.py#L15"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### get_xml
@@ -111,7 +112,8 @@ print(f"number of speakers: {len(speakers_words)}")
 ### Words per speaker
 
 ``` python
-df_speakers_tokens = pd.DataFrame(list(speakers_words.items()), columns=['speaker', 'tokens'])
+df_speakers_tokens = pd.DataFrame(
+    list(speakers_words.items()), columns=['speaker', 'tokens'])
 df_speakers_tokens = df_speakers_tokens.sort_values('tokens', ascending=False)
 df_speakers_tokens
 ```
@@ -136,11 +138,20 @@ for text in texts:
 pd.DataFrame([
     ['tokens', f'{len(tokens):,}'],
     ['types', f'{len(set(tokens)):,}'],
-    ]
+]
 )
 ```
 
 # Export corpus data in tabular format
+
+In addition to the metadata present in the corpus, I’ve added three
+columns providing positional information about the tokens:
+
+- `u_toks`: total number of tokens in the given utterance
+- `w_idx`: token position (‘index’) in the given utterance, starting at
+  1
+- `w_idx_rel`: relative token position in the given utterance:
+  `w_idx / u_toks`
 
 ``` python
 tokens = []
@@ -156,6 +167,7 @@ for text in texts:
             tok_d['u_who'] = u.get('who')
             tok_d['u_trans'] = u.get('trans')
             tok_d['u_whoConfidence'] = u.get('whoConfidence')
+            tok_d['u_toks'] = len(list(u.iter('w')))
 
             tok_d['w_pos'] = w.get('pos')
             tok_d['w_lemma'] = w.get('lemma')
@@ -163,6 +175,7 @@ for text in texts:
             tok_d['w_usas'] = w.get('usas')
             tok_d['w_text'] = w.text
             tok_d['w_idx'] = i + 1
+            tok_d['w_idx_rel'] = round(tok_d['w_idx'] / tok_d['u_toks'], 2)
 
             tokens.append(tok_d)
 ```
@@ -173,10 +186,6 @@ tokens = pd.DataFrame(tokens)
 
 ``` python
 tokens.head(50)
-```
-
-``` python
-len(tokens)
 ```
 
 ``` python

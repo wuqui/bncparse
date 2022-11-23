@@ -10,9 +10,11 @@ from collections import defaultdict
 from lxml import etree
 import pandas as pd
 
+
 # %% ../nbs/index.ipynb 15
 def get_xml(f_path):
     with open(f_path, 'r') as f:
         f = f.read()
     xml = etree.fromstring(f)
     return xml
+
