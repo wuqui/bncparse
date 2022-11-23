@@ -25,7 +25,7 @@ For development, I use a small subset of the corpus contained in
 `data/test` that only contains the first 10 texts.
 
 ``` python
-testing = False
+testing = True
 
 if testing:
     path_bnc = Path('../data/test/bnc-2014-spoken')
