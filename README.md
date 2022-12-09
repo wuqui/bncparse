@@ -14,7 +14,7 @@ Quirin Würschinger, LMU Munich
 <p>
 
 <img src="index_files/figure-commonmark/mermaid-figure-1.png"
-style="width:10.75in;height:13.7in" />
+style="width:7in;height:8.08in" />
 
 </p>
 
@@ -97,7 +97,7 @@ text_ids = [xml.get('id') for xml in texts]
 print(f"number of documents in the corpus: {len(text_ids)}")
 ```
 
-    number of documents in the corpus: 1251
+    number of documents in the corpus: 10
 
 ``` python
 assert len(text_ids) == texts_n
@@ -124,7 +124,7 @@ for text in texts:
 print(f"number of speakers: {len(speakers_words)}")
 ```
 
-    number of speakers: 671
+    number of speakers: 24
 
 ### Words per speaker
 
@@ -159,63 +159,127 @@ df_speakers_tokens
   </thead>
   <tbody>
     <tr>
-      <th>179</th>
-      <td>S0192</td>
-      <td>362107</td>
+      <th>20</th>
+      <td>S0336</td>
+      <td>14332</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>S0012</td>
-      <td>277953</td>
+      <th>21</th>
+      <td>S0362</td>
+      <td>11261</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>S0115</td>
+      <td>7522</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>S0084</td>
-      <td>276558</td>
+      <td>S0037</td>
+      <td>6970</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S0623</td>
+      <td>6621</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>S0024</td>
+      <td>5086</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S0611</td>
+      <td>4698</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>S0144</td>
+      <td>4183</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>S0687</td>
+      <td>3810</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>S0261</td>
+      <td>3596</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>S0688</td>
+      <td>2987</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>S0689</td>
+      <td>2832</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>S0567</td>
+      <td>2784</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>S0041</td>
-      <td>208025</td>
+      <td>S0030</td>
+      <td>2622</td>
     </tr>
     <tr>
-      <th>59</th>
+      <th>2</th>
+      <td>S0620</td>
+      <td>2488</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>S0096</td>
+      <td>2261</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>S0441</td>
+      <td>2129</td>
+    </tr>
+    <tr>
+      <th>8</th>
       <td>S0439</td>
-      <td>205049</td>
+      <td>2032</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
+      <th>23</th>
+      <td>S0262</td>
+      <td>1863</td>
     </tr>
     <tr>
-      <th>537</th>
-      <td>S0121</td>
-      <td>61</td>
+      <th>6</th>
+      <td>S0680</td>
+      <td>1858</td>
     </tr>
     <tr>
-      <th>654</th>
-      <td>S0414</td>
-      <td>43</td>
+      <th>12</th>
+      <td>S0690</td>
+      <td>1782</td>
     </tr>
     <tr>
-      <th>388</th>
-      <td>S0413</td>
-      <td>36</td>
+      <th>7</th>
+      <td>S0679</td>
+      <td>848</td>
     </tr>
     <tr>
-      <th>670</th>
-      <td>S0066</td>
-      <td>28</td>
+      <th>4</th>
+      <td>UNKFEMALE</td>
+      <td>91</td>
     </tr>
     <tr>
-      <th>415</th>
-      <td>S0676</td>
-      <td>19</td>
+      <th>3</th>
+      <td>UNKMULTI</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
-<p>671 rows × 2 columns</p>
 </div>
 
 The table containing all speakers and their total token counts can be
@@ -236,11 +300,13 @@ for text in texts:
 ```
 
 ``` python
-pd.DataFrame([
-    ['tokens', f'{len(tokens):,}'],
-    ['types', f'{len(set(tokens)):,}'],
-]
+n_toks_types = pd.DataFrame(
+    {'tokens': f'{len(tokens):,}', 
+    'types': f'{len(set(tokens)):,}'}, 
+    index=[0]
 )
+
+n_toks_types
 ```
 
 <div>
@@ -261,20 +327,15 @@ pd.DataFrame([
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>0</th>
-      <th>1</th>
+      <th>tokens</th>
+      <th>types</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>tokens</td>
-      <td>11,422,615</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>types</td>
-      <td>69,190</td>
+      <td>94,659</td>
+      <td>5,334</td>
     </tr>
   </tbody>
 </table>
@@ -318,15 +379,15 @@ for text in texts:
             tokens.append(tok_d)
 ```
 
-    CPU times: user 1min 43s, sys: 1min 42s, total: 3min 26s
-    Wall time: 4min 19s
+    CPU times: user 700 ms, sys: 79.4 ms, total: 780 ms
+    Wall time: 794 ms
 
 ``` python
 tokens = pd.DataFrame(tokens)
 ```
 
-    CPU times: user 54.8 s, sys: 3min 36s, total: 4min 31s
-    Wall time: 6min 1s
+    CPU times: user 147 ms, sys: 18.8 ms, total: 166 ms
+    Wall time: 166 ms
 
 ``` python
 tokens.head(50)
@@ -368,803 +429,803 @@ tokens.head(50)
   <tbody>
     <tr>
       <th>0</th>
-      <td>SN64</td>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
+      <td>12</td>
+      <td>VM</td>
+      <td>shall</td>
+      <td>VERB</td>
+      <td>T1:1:3</td>
+      <td>shall</td>
+      <td>1</td>
+      <td>0.08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S2EF</td>
+      <td>1</td>
+      <td>S0567</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>12</td>
       <td>PPIS1</td>
       <td>i</td>
       <td>PRON</td>
       <td>Z8</td>
       <td>I</td>
-      <td>1</td>
-      <td>0.06</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>VBM</td>
-      <td>be</td>
-      <td>VERB</td>
-      <td>A3</td>
-      <td>'m</td>
       <td>2</td>
-      <td>0.11</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>JJ</td>
-      <td>glad</td>
-      <td>ADJ</td>
-      <td>E4:2</td>
-      <td>glad</td>
-      <td>3</td>
       <td>0.17</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>SN64</td>
+      <th>2</th>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>EX</td>
-      <td>there</td>
-      <td>PRON</td>
-      <td>Z5</td>
-      <td>there</td>
-      <td>4</td>
-      <td>0.22</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>VBZ</td>
-      <td>be</td>
+      <td>12</td>
+      <td>VVI</td>
+      <td>move</td>
       <td>VERB</td>
-      <td>A3</td>
-      <td>'s</td>
-      <td>5</td>
-      <td>0.28</td>
+      <td>M2</td>
+      <td>move</td>
+      <td>3</td>
+      <td>0.25</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>SN64</td>
+      <th>3</th>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
+      <td>12</td>
       <td>AT</td>
       <td>the</td>
       <td>ART</td>
       <td>Z5</td>
       <td>the</td>
-      <td>6</td>
+      <td>4</td>
       <td>0.33</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>SN64</td>
+      <th>4</th>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>MC</td>
-      <td>two</td>
-      <td>ADJ</td>
-      <td>N1</td>
-      <td>two</td>
-      <td>7</td>
-      <td>0.39</td>
+      <td>12</td>
+      <td>NN2</td>
+      <td>laptop</td>
+      <td>SUBST</td>
+      <td>Y2</td>
+      <td>laptops</td>
+      <td>5</td>
+      <td>0.42</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>SN64</td>
+      <th>5</th>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>PNQS</td>
-      <td>who</td>
-      <td>PRON</td>
-      <td>Z8</td>
-      <td>who</td>
-      <td>8</td>
-      <td>0.44</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>PPIS1</td>
-      <td>i</td>
-      <td>PRON</td>
-      <td>Z8</td>
-      <td>I</td>
-      <td>9</td>
+      <td>12</td>
+      <td>RT</td>
+      <td>then</td>
+      <td>ADV</td>
+      <td>N4</td>
+      <td>then</td>
+      <td>6</td>
       <td>0.50</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>SN64</td>
+      <th>6</th>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>RR</td>
-      <td>almost</td>
-      <td>ADV</td>
-      <td>A13:4</td>
-      <td>almost</td>
-      <td>10</td>
-      <td>0.56</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>VVD</td>
-      <td>come</td>
-      <td>VERB</td>
-      <td>A1:1:1</td>
-      <td>came</td>
-      <td>11</td>
-      <td>0.61</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>TO</td>
-      <td>to</td>
-      <td>PREP</td>
-      <td>Z5</td>
-      <td>to</td>
       <td>12</td>
-      <td>0.67</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>RR</td>
-      <td>well</td>
-      <td>ADV</td>
-      <td>A5:1</td>
-      <td>well</td>
-      <td>13</td>
-      <td>0.72</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>XX</td>
-      <td>not</td>
-      <td>ADV</td>
-      <td>Z6</td>
-      <td>not</td>
-      <td>14</td>
-      <td>0.78</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>VVD</td>
-      <td>come</td>
+      <td>VV0</td>
+      <td>stick</td>
       <td>VERB</td>
-      <td>A4:1</td>
-      <td>came</td>
-      <td>15</td>
-      <td>0.83</td>
+      <td>M2</td>
+      <td>stick</td>
+      <td>7</td>
+      <td>0.58</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>SN64</td>
+      <th>7</th>
+      <td>S2EF</td>
       <td>1</td>
-      <td>S0590</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>II</td>
-      <td>to</td>
-      <td>PREP</td>
-      <td>A4:1</td>
-      <td>to</td>
-      <td>16</td>
-      <td>0.89</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>NN2</td>
-      <td>blow</td>
-      <td>SUBST</td>
-      <td>S8</td>
-      <td>blows</td>
-      <td>17</td>
-      <td>0.94</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>SN64</td>
-      <td>1</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>CCB</td>
-      <td>but</td>
-      <td>CONJ</td>
-      <td>Z5</td>
-      <td>but</td>
-      <td>18</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>SN64</td>
-      <td>3</td>
-      <td>S0590</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>1</td>
-      <td>UH</td>
-      <td>erm</td>
-      <td>INTERJ</td>
-      <td>Z4</td>
-      <td>erm</td>
-      <td>1</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>VDD</td>
-      <td>do</td>
-      <td>VERB</td>
-      <td>Z5</td>
-      <td>did</td>
-      <td>1</td>
-      <td>0.11</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>PPY</td>
-      <td>you</td>
-      <td>PRON</td>
-      <td>Z8</td>
-      <td>you</td>
-      <td>2</td>
-      <td>0.22</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>VVI</td>
-      <td>put</td>
-      <td>VERB</td>
-      <td>X9:2</td>
-      <td>put</td>
-      <td>3</td>
-      <td>0.33</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>APPGE</td>
-      <td>your</td>
-      <td>PRON</td>
-      <td>Z8</td>
-      <td>your</td>
-      <td>4</td>
-      <td>0.44</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>NN1</td>
-      <td>foot</td>
-      <td>SUBST</td>
-      <td>X9:2</td>
-      <td>foot</td>
-      <td>5</td>
-      <td>0.56</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>II</td>
-      <td>in</td>
-      <td>PREP</td>
-      <td>X9:2</td>
-      <td>in</td>
-      <td>6</td>
-      <td>0.67</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
+      <td>12</td>
       <td>PPH1</td>
       <td>it</td>
       <td>PRON</td>
-      <td>X9:2</td>
+      <td>Z8</td>
       <td>it</td>
-      <td>7</td>
-      <td>0.78</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
-      <td>nonoverlap</td>
-      <td>high</td>
-      <td>9</td>
-      <td>RL</td>
-      <td>somewhere</td>
-      <td>ADV</td>
-      <td>M6</td>
-      <td>somewhere</td>
       <td>8</td>
-      <td>0.89</td>
+      <td>0.67</td>
     </tr>
     <tr>
-      <th>27</th>
-      <td>SN64</td>
-      <td>4</td>
-      <td>S0588</td>
+      <th>8</th>
+      <td>S2EF</td>
+      <td>1</td>
+      <td>S0567</td>
       <td>nonoverlap</td>
       <td>high</td>
+      <td>12</td>
+      <td>II</td>
+      <td>on</td>
+      <td>PREP</td>
+      <td>N6</td>
+      <td>on</td>
       <td>9</td>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>S2EF</td>
+      <td>1</td>
+      <td>S0567</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>12</td>
+      <td>AT</td>
+      <td>the</td>
+      <td>ART</td>
+      <td>N6</td>
+      <td>the</td>
+      <td>10</td>
+      <td>0.83</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>S2EF</td>
+      <td>1</td>
+      <td>S0567</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>12</td>
+      <td>NN1</td>
+      <td>table</td>
+      <td>SUBST</td>
+      <td>N6</td>
+      <td>table</td>
+      <td>11</td>
+      <td>0.92</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>S2EF</td>
+      <td>1</td>
+      <td>S0567</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>12</td>
       <td>YQUE</td>
       <td>PUNC</td>
       <td>STOP</td>
       <td></td>
       <td>?</td>
-      <td>9</td>
+      <td>12</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>UH</td>
+      <td>yeah</td>
+      <td>INTERJ</td>
+      <td>Z4</td>
+      <td>yeah</td>
+      <td>1</td>
+      <td>0.12</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>VD0</td>
+      <td>do</td>
+      <td>VERB</td>
+      <td>Z5</td>
+      <td>do</td>
+      <td>2</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>PPIS2</td>
+      <td>we</td>
+      <td>PRON</td>
+      <td>Z8</td>
+      <td>we</td>
+      <td>3</td>
+      <td>0.38</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>VVI</td>
+      <td>want</td>
+      <td>VERB</td>
+      <td>X7</td>
+      <td>want</td>
+      <td>4</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>NN2</td>
+      <td>plate</td>
+      <td>SUBST</td>
+      <td>O2</td>
+      <td>plates</td>
+      <td>5</td>
+      <td>0.62</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>CC</td>
+      <td>or</td>
+      <td>CONJ</td>
+      <td>Z5</td>
+      <td>or</td>
+      <td>6</td>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>UH</td>
+      <td>no</td>
+      <td>INTERJ</td>
+      <td>Z4</td>
+      <td>no</td>
+      <td>7</td>
+      <td>0.88</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>S2EF</td>
+      <td>2</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>8</td>
+      <td>YQUE</td>
+      <td>PUNC</td>
+      <td>STOP</td>
+      <td></td>
+      <td>?</td>
+      <td>8</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>S2EF</td>
+      <td>3</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>1</td>
+      <td>UH</td>
+      <td>no</td>
+      <td>INTERJ</td>
+      <td>Z4</td>
+      <td>no</td>
+      <td>1</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>S2EF</td>
+      <td>5</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>4</td>
+      <td>UH</td>
+      <td>no</td>
+      <td>INTERJ</td>
+      <td>Z4</td>
+      <td>no</td>
+      <td>1</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>S2EF</td>
+      <td>5</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>4</td>
+      <td>VV0</td>
+      <td>get</td>
+      <td>VERB</td>
+      <td>A2:1</td>
+      <td>get</td>
+      <td>2</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>S2EF</td>
+      <td>5</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>4</td>
+      <td>JJ</td>
+      <td>stuck</td>
+      <td>ADJ</td>
+      <td>A1:7</td>
+      <td>stuck</td>
+      <td>3</td>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>S2EF</td>
+      <td>5</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>4</td>
+      <td>II</td>
+      <td>in</td>
+      <td>PREP</td>
+      <td>Z5</td>
+      <td>in</td>
+      <td>4</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>S2EF</td>
+      <td>6</td>
+      <td>S0567</td>
+      <td>overlap</td>
+      <td>high</td>
+      <td>3</td>
+      <td>PPIS2</td>
+      <td>we</td>
+      <td>PRON</td>
+      <td>Z8</td>
+      <td>we</td>
+      <td>1</td>
+      <td>0.33</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>S2EF</td>
+      <td>6</td>
+      <td>S0567</td>
+      <td>overlap</td>
+      <td>high</td>
+      <td>3</td>
+      <td>VBR</td>
+      <td>be</td>
+      <td>VERB</td>
+      <td>A3</td>
+      <td>'re</td>
+      <td>2</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>S2EF</td>
+      <td>6</td>
+      <td>S0567</td>
+      <td>overlap</td>
+      <td>high</td>
+      <td>3</td>
+      <td>NN2</td>
+      <td>savage</td>
+      <td>SUBST</td>
+      <td>S1:1:1</td>
+      <td>savages</td>
+      <td>3</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>28</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
-      <td>high</td>
+      <td>S2EF</td>
       <td>7</td>
-      <td>AT</td>
-      <td>no</td>
-      <td>ART</td>
-      <td>Z6</td>
-      <td>no</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>4</td>
+      <td>PNQS</td>
+      <td>who</td>
+      <td>PRON</td>
+      <td>Z8</td>
+      <td>who</td>
       <td>1</td>
-      <td>0.14</td>
+      <td>0.25</td>
     </tr>
     <tr>
       <th>29</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
-      <td>high</td>
+      <td>S2EF</td>
       <td>7</td>
-      <td>NN1</td>
-      <td>idea</td>
-      <td>SUBST</td>
-      <td>X4:1</td>
-      <td>idea</td>
-      <td>2</td>
-      <td>0.29</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>7</td>
-      <td>RRQ</td>
-      <td>where</td>
-      <td>ADV</td>
-      <td>M6</td>
-      <td>where</td>
-      <td>3</td>
-      <td>0.43</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>7</td>
-      <td>PPHS2</td>
-      <td>they</td>
-      <td>PRON</td>
-      <td>Z8</td>
-      <td>they</td>
       <td>4</td>
-      <td>0.57</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>7</td>
-      <td>VH0</td>
-      <td>have</td>
+      <td>VVZ</td>
+      <td>need</td>
       <td>VERB</td>
-      <td>Z5</td>
-      <td>'ve</td>
-      <td>5</td>
-      <td>0.71</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>7</td>
-      <td>VBN</td>
-      <td>be</td>
-      <td>VERB</td>
-      <td>Z5</td>
-      <td>been</td>
-      <td>6</td>
-      <td>0.86</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>SN64</td>
-      <td>5</td>
-      <td>S0589</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>7</td>
-      <td>VVN</td>
-      <td>put</td>
-      <td>VERB</td>
-      <td>M2</td>
-      <td>put</td>
-      <td>7</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>UH</td>
-      <td>no</td>
-      <td>INTERJ</td>
-      <td>Z4</td>
-      <td>no</td>
-      <td>1</td>
-      <td>0.06</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>UH</td>
-      <td>no</td>
-      <td>INTERJ</td>
-      <td>Z4</td>
-      <td>no</td>
+      <td>S6</td>
+      <td>needs</td>
       <td>2</td>
-      <td>0.11</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>UH</td>
-      <td>no</td>
-      <td>INTERJ</td>
-      <td>Z4</td>
-      <td>no</td>
-      <td>3</td>
-      <td>0.17</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>AT1</td>
-      <td>a</td>
-      <td>ART</td>
-      <td>Z5</td>
-      <td>a</td>
-      <td>4</td>
-      <td>0.22</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>NN1</td>
-      <td>man</td>
-      <td>SUBST</td>
-      <td>S2:2</td>
-      <td>man</td>
-      <td>5</td>
-      <td>0.28</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>AT1</td>
-      <td>a</td>
-      <td>ART</td>
-      <td>Z5</td>
-      <td>a</td>
-      <td>6</td>
-      <td>0.33</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>NN</td>
-      <td>pair</td>
-      <td>SUBST</td>
-      <td>N5</td>
-      <td>pair</td>
-      <td>7</td>
-      <td>0.39</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>IO</td>
-      <td>of</td>
-      <td>PREP</td>
-      <td>Z5</td>
-      <td>of</td>
-      <td>8</td>
-      <td>0.44</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
-      <td>high</td>
-      <td>18</td>
-      <td>NN2</td>
-      <td>man</td>
-      <td>SUBST</td>
-      <td>S2:2</td>
-      <td>men</td>
-      <td>9</td>
       <td>0.50</td>
     </tr>
     <tr>
-      <th>44</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
+      <th>30</th>
+      <td>S2EF</td>
+      <td>7</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>CCB</td>
-      <td>but</td>
-      <td>CONJ</td>
-      <td>Z5</td>
-      <td>but</td>
-      <td>10</td>
-      <td>0.56</td>
+      <td>4</td>
+      <td>NN2</td>
+      <td>plate</td>
+      <td>SUBST</td>
+      <td>O2</td>
+      <td>plates</td>
+      <td>3</td>
+      <td>0.75</td>
     </tr>
     <tr>
-      <th>45</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
+      <th>31</th>
+      <td>S2EF</td>
+      <td>7</td>
+      <td>S0620</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>MC1</td>
-      <td>one</td>
-      <td>ADJ</td>
-      <td>N1</td>
-      <td>one</td>
-      <td>11</td>
-      <td>0.61</td>
+      <td>4</td>
+      <td>YQUE</td>
+      <td>PUNC</td>
+      <td>STOP</td>
+      <td></td>
+      <td>?</td>
+      <td>4</td>
+      <td>1.00</td>
     </tr>
     <tr>
-      <th>46</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
+      <th>32</th>
+      <td>S2EF</td>
+      <td>8</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>MC1</td>
-      <td>one</td>
-      <td>ADJ</td>
-      <td>N1</td>
-      <td>one</td>
-      <td>12</td>
+      <td>6</td>
+      <td>UH</td>
+      <td>oh</td>
+      <td>INTERJ</td>
+      <td>Z4</td>
+      <td>oh</td>
+      <td>1</td>
+      <td>0.17</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>S2EF</td>
+      <td>8</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>6</td>
+      <td>APPGE</td>
+      <td>my</td>
+      <td>PRON</td>
+      <td>Z4</td>
+      <td>my</td>
+      <td>2</td>
+      <td>0.33</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>S2EF</td>
+      <td>8</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>6</td>
+      <td>NN1</td>
+      <td>god</td>
+      <td>SUBST</td>
+      <td>Z4</td>
+      <td>god</td>
+      <td>3</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>S2EF</td>
+      <td>8</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>6</td>
+      <td>PPH1</td>
+      <td>it</td>
+      <td>PRON</td>
+      <td>Z8</td>
+      <td>it</td>
+      <td>4</td>
       <td>0.67</td>
     </tr>
     <tr>
-      <th>47</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
+      <th>36</th>
+      <td>S2EF</td>
+      <td>8</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>IO</td>
-      <td>of</td>
-      <td>PREP</td>
-      <td>Z5</td>
-      <td>of</td>
-      <td>13</td>
-      <td>0.72</td>
+      <td>6</td>
+      <td>VVZ</td>
+      <td>smell</td>
+      <td>VERB</td>
+      <td>X3:5</td>
+      <td>smells</td>
+      <td>5</td>
+      <td>0.83</td>
     </tr>
     <tr>
-      <th>48</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
+      <th>37</th>
+      <td>S2EF</td>
+      <td>8</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
-      <td>PPHO2</td>
-      <td>they</td>
+      <td>6</td>
+      <td>JJ</td>
+      <td>amazing</td>
+      <td>ADJ</td>
+      <td>O4:2</td>
+      <td>amazing</td>
+      <td>6</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>S2EF</td>
+      <td>9</td>
+      <td>S0567</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>2</td>
+      <td>PPIS1</td>
+      <td>i</td>
       <td>PRON</td>
       <td>Z8</td>
-      <td>them</td>
-      <td>14</td>
-      <td>0.78</td>
+      <td>I</td>
+      <td>1</td>
+      <td>0.50</td>
     </tr>
     <tr>
-      <th>49</th>
-      <td>SN64</td>
-      <td>6</td>
-      <td>S0590</td>
-      <td>overlap</td>
+      <th>39</th>
+      <td>S2EF</td>
+      <td>9</td>
+      <td>S0567</td>
+      <td>nonoverlap</td>
       <td>high</td>
-      <td>18</td>
+      <td>2</td>
+      <td>VV0</td>
+      <td>know</td>
+      <td>VERB</td>
+      <td>X2:2</td>
+      <td>know</td>
+      <td>2</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>PPH1</td>
+      <td>it</td>
+      <td>PRON</td>
+      <td>Z8</td>
+      <td>it</td>
+      <td>1</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>VBZ</td>
+      <td>be</td>
+      <td>VERB</td>
+      <td>A3</td>
+      <td>'s</td>
+      <td>2</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
       <td>XX</td>
       <td>not</td>
       <td>ADV</td>
       <td>Z6</td>
       <td>not</td>
-      <td>15</td>
-      <td>0.83</td>
+      <td>3</td>
+      <td>0.30</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>DB</td>
+      <td>all</td>
+      <td>ADJ</td>
+      <td>N5:1</td>
+      <td>all</td>
+      <td>4</td>
+      <td>0.40</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>VVGK</td>
+      <td>going</td>
+      <td>VERB</td>
+      <td>T1:1:3</td>
+      <td>gon</td>
+      <td>5</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>TO</td>
+      <td>to</td>
+      <td>PREP</td>
+      <td>Z5</td>
+      <td>na</td>
+      <td>6</td>
+      <td>0.60</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>VVI</td>
+      <td>fit</td>
+      <td>VERB</td>
+      <td>N3:2</td>
+      <td>fit</td>
+      <td>7</td>
+      <td>0.70</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>II</td>
+      <td>on</td>
+      <td>PREP</td>
+      <td>Z5</td>
+      <td>on</td>
+      <td>8</td>
+      <td>0.80</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>MC1</td>
+      <td>one</td>
+      <td>ADJ</td>
+      <td>N1</td>
+      <td>one</td>
+      <td>9</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>S2EF</td>
+      <td>10</td>
+      <td>S0623</td>
+      <td>nonoverlap</td>
+      <td>high</td>
+      <td>10</td>
+      <td>NN1</td>
+      <td>table</td>
+      <td>SUBST</td>
+      <td>H5</td>
+      <td>table</td>
+      <td>10</td>
+      <td>1.00</td>
     </tr>
   </tbody>
 </table>
