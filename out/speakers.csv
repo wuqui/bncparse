@@ -1,0 +1,25 @@
+who,exactage,age1994,agerange,gender,nat,birthplace,birthcountry,l1,lingorig,dialect_rep,hab_city,hab_country,hab_dur,dialect_l1,dialect_l2,dialect_l3,dialect_l4,edqual,occupation,socgrade,nssec,l2,fls,in_core,speaker_toks_n
+S0024,36,35_44,30_39,F,British,Norwich,England,English,England,Southern,"Dereham, Norfolk",England,28,uk,england,south,unspecified,5_postgrad,lecturer,A,1_2,,,n,5086
+S0030,,Unknown,40_49,F,British,London,England,English,England,Southern,Manchester,England,24 years,uk,england,south,unspecified,5_postgrad,Careers Consultant,B,2,,,n,2622
+S0037,,Unknown,19_29,F,British,"Sunderland, Tyne and Wear",England,English,England,North East,Cambridge,England,2 years,uk,england,north,northeast,5_postgrad,Research Manager,A,1_2,,,n,6970
+S0096,,Unknown,30_39,F,British,York,England,English,England,Northern,"Rochdale, Greater Manchester",England,30 years,uk,england,north,unspecified,5_postgrad,Careers Consultant,B,2,Kutchi,,n,2261
+S0115,,Unknown,30_39,M,British,Birmingham,England,English,England,Midlands,Cambridge,England,"2 years, 2 months",uk,england,midlands,unspecified,5_postgrad,PhD student,A,1_2,,French -- Advanced; German -- Advanced,n,7522
+S0144,36,35_44,30_39,M,British,London,England,English,England,Southern,"Norwich, Norfolk",England,8,uk,england,south,unspecified,5_postgrad,Lecturer,A,1_2,,,y,4183
+S0261,41,35_44,40_49,M,British/New Zealand,Wellington,New Zealand,English,England/NZ,Kiwi English,,England,3 months,non_uk,non_uk,non_uk,non_uk,4_graduate,Entrepreneur,A,1_2,,,n,3596
+S0262,41,35_44,40_49,F,British,Dorchester,England,English,England,South of England,,England,2 months,uk,england,south,unspecified,5_postgrad,teacher,B,2,,French -- level unspecified; German -- level unspecified,y,1863
+S0336,24,15_24,19_29,F,British,Wegberg,Germany,English,England,none,Peterborough,England,17 years,unspecified,unspecified,unspecified,unspecified,5_postgrad,Administrator,C1,3,,German -- Beginner,n,14332
+S0362,25,25_34,19_29,M,British,Leicester,England,English,England,none,Deeping,England,13 years,unspecified,unspecified,unspecified,unspecified,5_postgrad,Coach/Franchise owner,B,2,,,y,11261
+S0439,23,15_24,19_29,F,British,UK,UK,English,England,Southern - Non-accent,Cambridge,England,6 months,uk,england,south,unspecified,4_graduate,Project Co-ordinator,B,2,,,n,2032
+S0441,24,15_24,19_29,F,British,UK,UK,English,England,Cambridgeshire - Southern,Cambridge,England,6 months,uk,england,south,unspecified,5_postgrad,Mental Health Nurse,B,2,,,y,2129
+S0567,20,15_24,19_29,F,British,Birmingham,UK,English,England,Southern English Accent,Lancaster,UK,11 months (First year and half second year),uk,england,south,unspecified,4_graduate,student,E,uncat,,,n,2784
+S0611,20,15_24,19_29,F,British,"Wakefield, West Yorkshire",England,English,England,West Yorksire,Lancaster,England,13 months,uk,england,north,yorkshire,4_graduate,student,E,uncat,,Spanish -- basic,n,4698
+S0620,19,15_24,19_29,F,British,"Stockport, UK",England,English,England,British,Lancaster,England,18 months,uk,unspecified,unspecified,unspecified,3_sixthform,Student,E,uncat,,,n,2488
+S0623,20,15_24,19_29,F,British,Manchester,England,English,England,Mancunian,Lancaster,England,1 1/2 years,uk,england,north,northwest,4_graduate,student,E,uncat,,,y,6621
+S0679,54,45_59,50_59,F,British,"Kent, Margate",England,English,England,None/Southern,Cambridge,England,31 years,uk,england,south,unspecified,5_postgrad,Retired (University manager),E,8,,French -- level unspecified,y,848
+S0680,64,60plus,60_69,F,British,"Margate, Kent",England,English,England,Mostly Southern,"Leeds, West Yorks.",England,42 years,uk,england,south,unspecified,4_graduate,Retired teacher,E,8,,French -- School,y,1858
+S0687,21,15_24,19_29,F,British,Bolton,England,English,UK,Lancashire,Bolton,England,21 years,uk,england,north,northwest,4_graduate,Student,E,uncat,,Spanish -- A-level,y,3810
+S0688,53,45_59,50_59,F,British,Bolton,England,English,UK,Lancashire,Bolton,England,53 years,uk,england,north,northwest,4_graduate,Midwife,B,2,,,y,2987
+S0689,16,15_24,11_18,M,British,Bolton,England,English,UK,Lancashire,Bolton,England,16 years,uk,england,north,northwest,2_secondary,Student,E,uncat,,,y,2832
+S0690,53,45_59,50_59,M,British,London,England,English,UK,mixed southern English,Bolton,England,25 years,uk,england,south,unspecified,4_graduate,Management Consultant,A,1_2,,,n,1782
+UNKFEMALE,,Unknown,Unknown,F,,,,,,None indicated,,,,unspecified,unspecified,unspecified,unspecified,9_unknown,,unknown,unknown,,,n,91
+UNKMULTI,,Unknown,Unknown,X,,,,,,None indicated,,,,unspecified,unspecified,unspecified,unspecified,9_unknown,,unknown,unknown,,,n,3

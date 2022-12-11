@@ -4,6 +4,7 @@
 __all__ = ['get_xml']
 
 # %% ../nbs/index.ipynb 7
+import os
 from pathlib import Path
 from collections import defaultdict
 
