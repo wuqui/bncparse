@@ -153,3 +153,4 @@ checklink/cookies.txt
 
 # outputs
 /out/tokens.csv
+/out/tokens-plus-meta.csv

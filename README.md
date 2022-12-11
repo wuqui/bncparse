@@ -14,7 +14,7 @@ Quirin Würschinger, LMU Munich
 <p>
 
 <img src="index_files/figure-commonmark/mermaid-figure-1.png"
-style="width:7in;height:11.98in" />
+style="width:7in;height:8.14in" />
 
 </p>
 
@@ -38,7 +38,7 @@ For development, I use a small subset of the corpus contained in
 `data/test` that only contains the first 10 texts.
 
 ``` python
-testing = True
+testing = False
 
 if testing:
     path_bnc = Path('../data/test/bnc-2014-spoken')
@@ -83,7 +83,7 @@ assert len(path_texts) == texts_n
 ------------------------------------------------------------------------
 
 <a
-href="https://github.com/wuqui/bncparse/blob/main/bncparse/core.py#L15"
+href="https://github.com/wuqui/bncparse/blob/main/bncparse/core.py#L16"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### get_xml
@@ -459,7 +459,8 @@ meta_texts
 </div>
 
 ``` python
-meta_texts.to_csv('../out/texts.csv', index=False)
+if not testing:
+    meta_texts.to_csv('../out/texts.csv', index=False)
 ```
 
 # Utterances
@@ -619,7 +620,8 @@ utterances
 </div>
 
 ``` python
-utterances.to_csv('../out/utterances.csv', index=False)
+if not testing:
+    utterances.to_csv('../out/utterances.csv', index=False)
 ```
 
 # Speakers
@@ -1696,7 +1698,8 @@ meta_speakers
 ## Write out
 
 ``` python
-meta_speakers.to_csv('../out/speakers.csv', index=False)
+if not testing:
+    meta_speakers.to_csv('../out/speakers.csv', index=False)
 ```
 
 # Tokens
@@ -2058,75 +2061,6 @@ if not testing:
      .to_csv('../out/tokens_50k.csv', index=False))
 ```
 
-# Corpus statistics
-
-## Texts
-
-Calculate the total number of texts in the corpus.
-
-``` python
-text_ids = [xml.get('id') for xml in texts]
-
-print(f"number of documents in the corpus: {len(text_ids)}")
-```
-
-    number of documents in the corpus: 10
-
-``` python
-assert len(text_ids) == texts_n
-```
-
-## Vocabulary
-
-``` python
-toks = []
-for text in texts:
-    for w in text.iter('w'):
-        toks.append(w.text)
-```
-
-``` python
-n_toks_types = pd.DataFrame(
-    {'tokens': f'{len(tokens):,}', 
-    'types': f'{len(set(tokens)):,}'}, 
-    index=[0]
-)
-
-n_toks_types
-```
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>tokens</th>
-      <th>types</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>94,659</td>
-      <td>8</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 # Merge tokens with metadata
 
 ``` python
@@ -2311,7 +2245,8 @@ toks_utt_text_speakers.info()
 ## Write out
 
 ``` python
-toks_utt_text_speakers.to_csv('../out/tokens-plus-meta.csv', index=False)
+if not testing:
+    toks_utt_text_speakers.to_csv('../out/tokens-plus-meta.csv', index=False)
 ```
 
 ``` python
@@ -2326,7 +2261,9 @@ I also write out a small version containing the first 50,000 rows for
 use in spreadsheet software:
 
 ``` python
-toks_utt_text_speakers.iloc[:50_000].to_csv('../out/tokens-plus-meta_small.csv', index=False)
+if not testing:
+    toks_utt_text_speakers.iloc[:50_000].to_csv(
+        '../out/tokens-plus-meta_small.csv', index=False)
 ```
 
 ``` python
