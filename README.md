@@ -2262,15 +2262,9 @@ toks_utt_text_speakers.info()
 ``` python
 if not testing:
     toks_utt_text_speakers.to_csv('../out/tokens-plus-meta.csv', index=False)
+    print(f'number of rows: {len(toks_utt_text_speakers)}')
+    print(f'file size: {os.path.getsize("../out/tokens-plus-meta.csv") / 1_000_000:.2f} MB')
 ```
-
-``` python
-print(f'number of rows: {len(toks_utt_text_speakers)}')
-print(f'file size: {os.path.getsize("../out/tokens-plus-meta.csv") / 1_000_000:.2f} MB')
-```
-
-    number of rows: 94659
-    file size: 7476.29 MB
 
 I also write out a small version containing the first 50,000 rows for
 use in spreadsheet software:
@@ -2279,12 +2273,6 @@ use in spreadsheet software:
 if not testing:
     toks_utt_text_speakers.iloc[:50_000].to_csv(
         '../out/tokens-plus-meta_small.csv', index=False)
+    print(f'number of rows: {len(toks_utt_text_speakers.iloc[:50_000])}')
+    print(f'file size: {os.path.getsize("../out/tokens-plus-meta_small.csv") / 1_000_000:.2f} MB')
 ```
-
-``` python
-print(f'number of rows: {len(toks_utt_text_speakers.iloc[:50_000])}')
-print(f'file size: {os.path.getsize("../out/tokens-plus-meta_small.csv") / 1_000_000:.2f} MB')
-```
-
-    number of rows: 50000
-    file size: 28.43 MB
