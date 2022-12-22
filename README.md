@@ -517,7 +517,9 @@ utterances_requests = utterances_requests.iloc[:50_000]
 write out to `out/utterances_requests_50k.csv`
 
 ``` python
-utterances_requests.to_csv('../out/utterances_requests_50k.csv', index=False)
+if not testing:
+    utterances_requests.to_csv(
+        '../out/utterances_requests_50k.csv', index=False)
 ```
 
 # Speakers
