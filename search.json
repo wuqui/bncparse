@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "BNCparse",
+    "section": "",
+    "text": "Quirin Würschinger, LMU Munich\nq.wuerschinger@lmu.de\nDocumentation: https://wuqui.github.io/bncparse/\nPlease visit the above website, as GitHub cannot render everything properly in the version below."
+  },
+  {
+    "objectID": "index.html#data-overview",
+    "href": "index.html#data-overview",
+    "title": "BNCparse",
+    "section": "Data overview",
+    "text": "Data overview\nThe diagram below illustrates all of the data that is currently available. Variables that have been added to what was available from the downloadable version of the BNC are marked with a + prefix.\n\n\n\n\nclassDiagram\n\nclass text {\n    <<conversation>>\n    text_id : \"Text ID\"\n}\n\nclass u {\n    <<utterances.csv>>\n    n : \"Consecutive utterance number\"\n    who : \"Speaker ID\"\n    trans : \"Transition type\"\n    whoConfidence: \"Attribution confidence\"\n\n    + u_toks_n : \"Number of tokens in the utterance\"\n}\n\nclass w {\n    <<tokens.csv>>\n    pos : \"part-of-speech tag [CLAWS]\"\n    lemma : \"lemmatised form\"\n    class : \"“simple” POS tag or major word-class\"\n    usas : \"semantic tag [USAS]\"\n\n    + w_idx : \"token position in the given utterance\"\n    + w_idx_rel : \"relative token position in the given utterance\"\n    + w_L1 : \"preceding token\"\n    + w_R1 : = \"subsequent token\n}\n\nclass meta_speaker {\n    <<speakers.csv>>\n    id : \"Speaker ID\"\n    exactage : \"Exact age\"\n    age1994 : \"Age [BNC1994 groups]\"\n    agerange : \"Age range\"\n    gender : \"Gender\"\n    nat : \"Nationality\"\n    birthplace : \"Place of birth\"\n    birthcountry : \"Country of birth\"\n    l1 : \"First language\"\n    lingorig : \"Linguistic origin\"\n    dialect_rep : \"Accent/dialect as reported\"\n    hab_city : \"City/town living\"\n    hab_country : \"Country living\"\n    hab_dur : \"Duration living [years]\"\n    dialect_l1 : \"Dialect at Level 1\"\n    dialect_l2 : \"Dialect at Level 2\"\n    dialect_l3 : \"Dialect at Level 3\"\n    dialect_l4 : \"Dialect at Level 4\"\n    edqual : \"Highest qualification\"\n    occupation : \"Occupation: title\"\n    socgrade : \"Class: Social grade\"\n    nssec : \"Class: NS-SEC\"\n    l2 : \"L2 [if bilingual]\"\n    fls : \"Foreign languages spoken\"\n    in_core : \"Part of core set of speakers\"\n    + speaker_toks_n : \"Total number of tokens\"\n}\n\nclass meta_text {\n    <<texts.csv>>\n    text_id : \"Text ID\"\n    rec_length : \"Recording length\"\n    rec_date : \"Recording date\"\n    rec_year : \"Year of recording\"\n    rec_period : \"Recording period\"\n    n_speakers : \"Number of speakers\"\n    list_speakers : \"List of speaker IDs\"\n    rec_loc : \"Recording location\"\n    relationships : \"Inter-speaker relationship\"\n    topics : \"Topics covered\"\n    activity : \"Activity description\"\n    conv_type : \"Selected characterisations of conversation type\"\n    conventions : \"Transcription conventions used\"\n    in_sample : \"Sample release inclusion\"\n    transcriber : \"Transcriber\"\n}\n\ntext ..* u : contains\nu ..* w : contains\ntext .. meta_text : text_id\nu .. meta_speaker : who"
+  },
+  {
+    "objectID": "index.html#add-number-of-tokens-per-text",
+    "href": "index.html#add-number-of-tokens-per-text",
+    "title": "BNCparse",
+    "section": "Add number of tokens per text",
+    "text": "Add number of tokens per text\n\ntexts_tokens = []\n\nfor text in texts:\n    text_d = {}\n    text_d['text_id'] = text.get('id')\n    text_d['text_toks_n'] = 0\n    for tok in text.iter('w'):\n        text_d['text_toks_n'] += 1\n    texts_tokens.append(text_d)\n\n\ntexts_tokens = pd.DataFrame(texts_tokens)\ntexts_tokens\n\n\n# reset index and call it text_id\nmeta_texts_merge = meta_texts.reset_index().rename(columns={'index': 'text_id'})\n\n\nmeta_texts = pd.merge(\n    left=meta_texts_merge,\n    right=texts_tokens,\n    on='text_id'\n)\n\n\nmeta_texts\n\n\nif not testing:\n    meta_texts.to_csv('../out/texts.csv', index=False)"
+  },
+  {
+    "objectID": "index.html#create-utterance-table-for-annotating",
+    "href": "index.html#create-utterance-table-for-annotating",
+    "title": "BNCparse",
+    "section": "Create utterance table for annotating",
+    "text": "Create utterance table for annotating\nFor this, I use the untagged version of the corpus in the directory spoken/untagged/.\n\npath_texts_untag = list(path_corpus_untagged.glob('*.xml'))\n\n\ntexts_untag = [get_xml(fp) for fp in path_texts_untag]\n\nLimit to texts that have the word ‘request’ in the conv_type field of the header preamble.\n\ntexts_untag_requests = []\n\nfor text in texts_untag:\n    header = text.find('header')\n    if header is not None:\n        conv_type = header.find('conv_type')\n        if conv_type is not None:\n            conv_type_text = conv_type.text\n            if conv_type_text is not None:\n                if 'request' in conv_type_text:\n                    texts_untag_requests.append(text)\n                else:\n                    continue\n            else:\n                continue\n        else:\n            continue\n    else:\n        continue\n\n\nprint(\n    f'all texts: {len(texts_untag)}',\n    f'texts with requests: {len(texts_untag_requests)}',\n    sep='\\n'\n)\n\nall texts: 1251\ntexts with requests: 154\n\n\n\nutterances_requests = []\n\nfor text in texts_untag_requests:\n    for u in text.iter('u'):\n        u_d = {}\n        u_d['text_id'] = text.get('id')\n        u_d['u_n'] = u.get('n')\n        u_d['u_who'] = u.get('who')\n        u_d['text'] = u.text\n        utterances_requests.append(u_d)\n\n\nutterances_requests = pd.DataFrame(utterances_requests)\n\n\nutterances_requests\n\n\n\n\n\n  \n    \n      \n      text_id\n      u_n\n      u_who\n      text\n    \n  \n  \n    \n      0\n      SQ2W\n      1\n      S0439\n      we have to like move out of this house\n    \n    \n      1\n      SQ2W\n      2\n      S0441\n      no\n    \n    \n      2\n      SQ2W\n      3\n      S0439\n      no no not move out of the house we have this v...\n    \n    \n      3\n      SQ2W\n      4\n      S0441\n      None\n    \n    \n      4\n      SQ2W\n      5\n      S0439\n      oh er are you here this weekend?\n    \n    \n      ...\n      ...\n      ...\n      ...\n      ...\n    \n    \n      204613\n      SJSC\n      1166\n      S0439\n      mm\n    \n    \n      204614\n      SJSC\n      1167\n      S0440\n      but the pension at the moment\n    \n    \n      204615\n      SJSC\n      1168\n      S0439\n      we're not\n    \n    \n      204616\n      SJSC\n      1169\n      S0440\n      None\n    \n    \n      204617\n      SJSC\n      1170\n      S0440\n      ah bonjour Paris calling Paris calling\n    \n  \n\n204618 rows × 4 columns\n\n\n\nfilter out utterances without text\n\nutterances_requests = utterances_requests[utterances_requests['text'].notna()]\n\nrandomize rows\n\nutterances_requests = utterances_requests.sample(frac=1).reset_index(drop=True)\n\nselect first 50,000 rows\n\nutterances_requests = utterances_requests.iloc[:50_000]\n\nwrite out to out/utterances_requests_50k.csv\n\nif not testing:\n    utterances_requests.to_csv(\n        '../out/utterances_requests_50k.csv', index=False)"
+  },
+  {
+    "objectID": "index.html#add-number-of-tokens-per-speaker",
+    "href": "index.html#add-number-of-tokens-per-speaker",
+    "title": "BNCparse",
+    "section": "Add number of tokens per speaker",
+    "text": "Add number of tokens per speaker\n\nspeakers_toks = defaultdict(int)\n\nfor text in texts:\n    for u in text.iter('u'):\n        who = u.get('who')\n        n_words = len([w for w in u.iter('w')])\n        speakers_toks[who] += n_words\n\n\nspeaker_toks = pd.DataFrame(list(speakers_toks.items()), columns=['who', 'speaker_toks_n'])\n\n\nspeaker_toks.sort_values(by='speaker_toks_n', ascending=False).head(10)\n\n\nmeta_speakers_merge = meta_speakers.reset_index().rename(columns={'index': 'who'})\n\n\nmeta_speakers = pd.merge(\n    left=meta_speakers_merge,\n    right=speaker_toks,\n    on='who'\n)\n\n\nmeta_speakers"
+  },
+  {
+    "objectID": "index.html#write-out",
+    "href": "index.html#write-out",
+    "title": "BNCparse",
+    "section": "Write out",
+    "text": "Write out\n\nif not testing:\n    meta_speakers.to_csv('../out/speakers.csv', index=False)"
+  },
+  {
+    "objectID": "index.html#utterance-information",
+    "href": "index.html#utterance-information",
+    "title": "BNCparse",
+    "section": "+ utterance information",
+    "text": "+ utterance information\n\ntoks_utt = pd.merge(\n    tokens,\n    utterances,\n    on = ['text_id', 'u_n']\n)\n\n\ntoks_utt.info()"
+  },
+  {
+    "objectID": "index.html#text-information",
+    "href": "index.html#text-information",
+    "title": "BNCparse",
+    "section": "+ text information",
+    "text": "+ text information\n\ntoks_utt_text = pd.merge(\n    toks_utt,\n    meta_texts,\n    on = 'text_id'\n)\n\n\ntoks_utt_text.info()"
+  },
+  {
+    "objectID": "index.html#speaker-information",
+    "href": "index.html#speaker-information",
+    "title": "BNCparse",
+    "section": "+ speaker information",
+    "text": "+ speaker information\n\ntoks_utt_text_speakers = pd.merge(\n    toks_utt_text,\n    meta_speakers,\n    left_on = 'u_who',\n    right_on = 'who'\n)\n\n\ntoks_utt_text_speakers.info()"
+  },
+  {
+    "objectID": "index.html#write-out-1",
+    "href": "index.html#write-out-1",
+    "title": "BNCparse",
+    "section": "Write out",
+    "text": "Write out\n\nif not testing:\n    toks_utt_text_speakers.to_csv('../out/tokens-plus-meta.csv', index=False)\n    print(f'number of rows: {len(toks_utt_text_speakers)}')\n    print(f'file size: {os.path.getsize(\"../out/tokens-plus-meta.csv\") / 1_000_000:.2f} MB')\n\nI also write out a small version containing the first 50,000 rows for use in spreadsheet software:\n\nif not testing:\n    toks_utt_text_speakers.iloc[:50_000].to_csv(\n        '../out/tokens-plus-meta_small.csv', index=False)\n    print(f'number of rows: {len(toks_utt_text_speakers.iloc[:50_000])}')\n    print(f'file size: {os.path.getsize(\"../out/tokens-plus-meta_small.csv\") / 1_000_000:.2f} MB')"
+  }
+]
